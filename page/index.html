@@ -99,57 +99,81 @@
     <div class="col-md-9 col-md-push-3" id='text'>
       <h1>Droplets Simulation</h1>
 <p>Simulation of Virus-Laden Droplets Behavior in AFDET</p>
+<h2>ドキュメント</h2>
+<p>https://enehentaro.github.io/droplet-FORD-docs/</p>
 <h2>使い方</h2>
-<p>### 依存関係解決・コンパイル
-  ビルドに<code>cmake</code>コマンドを使います（<a href="https://qiita.com/ijknabla/items/05270ae5e597705d0dae#cmake-%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">CMakeのインストール</a>が必要）。
-  1. <code>$ mkdir build</code>でビルドディレクトリ作成
-  1. <code>$ cd build</code>で移動
-  1. <code>$ cmake ..</code>で依存関係解決
-      - 一部の環境(Windows等)では、<code>-G "MinGW Makefiles"</code>でGenerator指定
-      - <code>-D CMAKE_Fortran_COMPILER=[ifort/gfortran]</code>でコンパイラ指定
-      - <code>-D CMAKE_BUILD_TYPE=debug</code>でデバッグ用コンパイルオプション付与
-  1. <code>$ make</code>でコンパイル</p>
-<p>### 実行
-  ルートディレクトリ（README.mdのあるディレクトリ）での作業
-  1. 「SampleCase」ディレクトリを複製したのち、名前を変更する（ケース名を付ける）
-  1. ケースディレクトリ内の条件ファイル(condition.nml, initial_position.csv)を編集 
-  1. <code>./build/bin/main</code>で実行。ケース名を入力して計算開始。</p>
+<h3>依存関係解決・コンパイル</h3>
+<p>ビルドに<code>cmake</code>コマンドを使います（<a href="https://qiita.com/ijknabla/items/05270ae5e597705d0dae#cmake-%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">CMakeのインストール</a>が必要）。</p>
+<ol>
+<li><code>$ mkdir build</code>でビルドディレクトリ作成</li>
+<li><code>$ cd build</code>で移動</li>
+<li><code>$ cmake ..</code>で依存関係解決<ul>
+<li>一部の環境(Windows等)では、<code>-G "MinGW Makefiles"</code>でGenerator指定</li>
+<li><code>-D CMAKE_Fortran_COMPILER=[ifort/gfortran]</code>でコンパイラ指定</li>
+<li><code>-D CMAKE_BUILD_TYPE=debug</code>でデバッグ用コンパイルオプション付与</li>
+</ul>
+</li>
+<li><code>$ make</code>でコンパイル</li>
+</ol>
+<h3>実行</h3>
+<p>ルートディレクトリ（README.mdのあるディレクトリ）での作業</p>
+<ol>
+<li>「SampleCase」ディレクトリを複製したのち、名前を変更する（ケース名を付ける）</li>
+<li>ケースディレクトリ内の条件ファイル(condition.nml, initial_position.csv)を編集 </li>
+<li><code>./build/bin/main</code>で実行。ケース名を入力して計算開始。</li>
+</ol>
 <h2>条件ファイル(condition.nml, initial_position.csv)解説</h2>
-<p>### condition.nml
-  - <strong>リスタート位置 num_restart</strong>
-    - 通常は<code>0</code>を指定
-    - <code>1以上</code>にすると、その値に対応するbackupファイルが読み込まれ、そこからリスタートが始まる
-  - <strong>初期分布ファイル名 initialDistributionFName</strong>
-    - 指定したbackupファイル(.bu)が読み込まれ、それを飛沫初期分布とする
-    - 初期分布を固定したくない場合はコメントアウトすること
-  - <strong>飛沫周期発生 periodicGeneration</strong>
-    - 1秒当たりの発生飛沫数（整数）を指定
-    - 初期配置飛沫をすべてNonActiveにしたのち、順次Activateしていくので、初期配置数が飛沫数の上限となる
-  - <strong>気流データファイル名 path2FlowFile</strong>
-    - 実行ディレクトリからの相対パス、もしくは絶対パスを指定
-    - 現在可能な流れ場ファイル：
-      - VTK
-      - INP
-      - FLD
-    - CUBE格子(PLOT3D)は、予め非構造格子に変換してから計算してください。
-    - .arrayファイルを指定する場合、別途メッシュファイルが必要なので、<code>meshFile = ***</code>と指定する
-  - <strong>ステップ数オフセット OFFSET</strong>
-    - 飛沫計算を、流体連番ファイルの途中の番号から始めたいときに指定
-  - <strong>気流データを周期的に用いる場合の先頭と末尾 LoopHead, LoopTail</strong>
-    - 任意の区間の流体連番ファイルを繰り返し用いるときに指定（例えば呼吸のサイクル）
-    - <code>(先頭) = (末尾)</code> とすると、そのステップ数到達後は流れ場の更新が起こらなくなる
-    - <code>(先頭) &gt; (末尾)</code> とすれば、特殊な処理は起こらず、流体連番ファイルが順番に読み込まれる
-  ### initial_position.csv
-  - 初期飛沫の配置帯（直方体）を設定する
-  - 左から順に、直方体の中心座標(x,y,z), 直方体の幅(x,y,z)
-  - 改行すれば配置帯を複数設定できる</p>
+<h3>condition.nml</h3>
+<ul>
+<li><strong>リスタート位置 num_restart</strong><ul>
+<li>通常は<code>0</code>を指定</li>
+<li><code>1以上</code>にすると、その値に対応するbackupファイルが読み込まれ、そこからリスタートが始まる</li>
+</ul>
+</li>
+<li><strong>初期分布ファイル名 initialDistributionFName</strong><ul>
+<li>指定したbackupファイル(.bu)が読み込まれ、それを飛沫初期分布とする</li>
+<li>初期分布を固定したくない場合はコメントアウトすること</li>
+</ul>
+</li>
+<li><strong>飛沫周期発生 periodicGeneration</strong><ul>
+<li>1秒当たりの発生飛沫数（整数）を指定</li>
+<li>初期配置飛沫をすべてNonActiveにしたのち、順次Activateしていくので、初期配置数が飛沫数の上限となる</li>
+</ul>
+</li>
+<li><strong>気流データファイル名 path2FlowFile</strong><ul>
+<li>実行ディレクトリからの相対パス、もしくは絶対パスを指定</li>
+<li>現在可能な流れ場ファイル：</li>
+<li>VTK</li>
+<li>INP</li>
+<li>FLD</li>
+<li>CUBE格子(PLOT3D)は、予め非構造格子に変換してから計算してください。</li>
+<li>.arrayファイルを指定する場合、別途メッシュファイルが必要なので、<code>meshFile = ***</code>と指定する</li>
+</ul>
+</li>
+<li><strong>ステップ数オフセット OFFSET</strong><ul>
+<li>飛沫計算を、流体連番ファイルの途中の番号から始めたいときに指定</li>
+</ul>
+</li>
+<li><strong>気流データを周期的に用いる場合の先頭と末尾 LoopHead, LoopTail</strong><ul>
+<li>任意の区間の流体連番ファイルを繰り返し用いるときに指定（例えば呼吸のサイクル）</li>
+<li><code>(先頭) = (末尾)</code> とすると、そのステップ数到達後は流れ場の更新が起こらなくなる</li>
+<li><code>(先頭) &gt; (末尾)</code> とすれば、特殊な処理は起こらず、流体連番ファイルが順番に読み込まれる</li>
+</ul>
+</li>
+</ul>
+<h3>initial_position.csv</h3>
+<ul>
+<li>初期飛沫の配置帯（直方体）を設定する</li>
+<li>左から順に、直方体の中心座標(x,y,z), 直方体の幅(x,y,z)</li>
+<li>改行すれば配置帯を複数設定できる</li>
+</ul>
 <h2>方程式</h2>
-<p>### 飛沫の蒸発方程式</p>
+<h3>飛沫の蒸発方程式</h3>
 <p>
 <script type="math/tex; mode=display"> \frac{dr}{dt} \space = \space -\left(1-\frac{RH}{100}\right) \cdot \frac{D e_{s}(T)}{\rho_{w} R_{v} T} \cdot \frac{1}{r} </script>
 </p>
 <p>プログラム内では、２次精度ルンゲクッタ法で解いている。</p>
-<p>### 飛沫の運動方程式</p>
+<h3>飛沫の運動方程式</h3>
 <p>
 <script type="math/tex; mode=display"> m \frac{d \mathbf{v}}{dt} \space = \space m \mathbf{g} \space + \space C_D (\mathbf{v}) \space \cdot \space \frac{1}{2} \rho_a S \left | \mathbf{u}_a - \mathbf{v} \right | (\mathbf{u}_a - \mathbf{v}) </script>
 </p>
