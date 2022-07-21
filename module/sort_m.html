@@ -323,6 +323,8 @@
      <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="type-content_t"></span><h3>type, public :: <a href='../type/content_t.html'>content_t</a>  </h3></div>
   <div class="panel-body">
+    <p>コンテンツ構造体
+実数とIDをメンバに持つ</p>
      <h4>Components</h4>
     <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
@@ -347,6 +349,9 @@
      <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="type-heaptree"></span><h3>type, public :: <a href='../type/heaptree.html'>HeapTree</a>  </h3></div>
   <div class="panel-body">
+    <p>ヒープ木クラス
+実体は単なる配列だがツリー構造を表現している
+要素 i に注目すると、親ノードは要素 i/2(小数切り捨て) であり、子ノードは要素 2i, 2i + 1 である</p>
      <h4>Components</h4>
     <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
@@ -382,7 +387,9 @@
       <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-real2content"></span><h3>public function <a href='../proc/real2content.html'>real2content</a>(real_array) result(content_array)</h3></div>
   <div class="panel-body">
-           
+       
+<p>実数型配列をコンテンツ配列に変換する</p>
+    
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
@@ -408,7 +415,9 @@
       <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-heap_sort"></span><h3>public subroutine <a href='../proc/heap_sort.html'>heap_sort</a>(array_origin, array_sorted)</h3></div>
   <div class="panel-body">
-           
+       
+<p>ヒープソート</p>
+    
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
