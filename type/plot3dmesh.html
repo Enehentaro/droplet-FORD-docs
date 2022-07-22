@@ -144,7 +144,7 @@
     
     <div class="col-md-9" id='text'>
       <h2>type, public :: Plot3dMesh</h2>
-    
+    <p>Plot3Dメッシュクラス</p>
 <br>    <div class="panel panel-default">
       <div class="panel-heading">
   <h3 class="panel-title">Inherits</h3>
@@ -274,7 +274,7 @@
 <tr>
   <td><span class="anchor" id="variable-cubes"></span>type(<a href='../type/cube_inp3d.html'>cube_inP3D</a>),</td>
 <td>public,</td>  <td>allocatable</td><td>::</td>
-  <td><strong>cubes</strong>(:)</td><td></td><td></td><td></td>
+  <td><strong>cubes</strong>(:)</td><td></td><td></td><td><p>cube配列</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-areaofmesh"></span>procedure,</td>
@@ -296,7 +296,8 @@
   <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-get_cubeshape"></span><h3>procedure, public :: <strong>get_cubeShape</strong>    </h3></div>
   <ul class="list-group">
       <li class="list-group-item">
-          <h3>private function get_cubeShape(self) result(cubeShape)</h3>    
+          <h3>private function get_cubeShape(self) result(cubeShape)</h3><p>cubeの形状（i,j,k節点数）を返す関数</p>
+    
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
@@ -319,7 +320,8 @@
   <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-get_velocity"></span><h3>procedure, public :: <strong>get_velocity</strong>    </h3></div>
   <ul class="list-group">
       <li class="list-group-item">
-          <h3>private function get_velocity(self, node) result(velocity)</h3>    
+          <h3>private function get_velocity(self, node) result(velocity)</h3><p>任意節点（引数）における流速を返す関数</p>
+    
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
@@ -333,7 +335,7 @@
   <td><span class="anchor" ></span>type(<a href='../type/plot3dnodeinfo.html'>plot3dNodeInfo</a>),</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
-  <td><strong>node</strong></td><td></td>
+  <td><strong>node</strong></td><td><p>節点</p></td>
 </tr>
 </tbody>
 </table>
@@ -348,7 +350,8 @@
   <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-get_numcube"></span><h3>procedure, public :: <strong>get_numCube</strong>    </h3></div>
   <ul class="list-group">
       <li class="list-group-item">
-          <h3>private function get_numCube(self)</h3>    
+          <h3>private function get_numCube(self)</h3><p>メッシュを構成するcube数を返す関数</p>
+    
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
@@ -371,7 +374,9 @@
   <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-read_plot3d_function"></span><h3>procedure, public :: <strong>read_plot3d_function</strong>    </h3></div>
   <ul class="list-group">
       <li class="list-group-item">
-          <h3>private subroutine read_plot3d_function(self, fName)</h3>    
+          <h3>private subroutine read_plot3d_function(self, fName)</h3><p>メッシュクラスメソッド
+保存量ファイル（.f）を読み込み、メッシュクラスに格納する</p>
+    
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
@@ -399,7 +404,8 @@
   <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-nearestnodeinfo"></span><h3>procedure, public :: <strong>nearestNodeInfo</strong>    </h3></div>
   <ul class="list-group">
       <li class="list-group-item">
-          <h3>private function nearestNodeInfo(self, cdn)</h3>    
+          <h3>private function nearestNodeInfo(self, cdn)</h3><p>任意座標（引数）に最近傍な節点を探し、その情報（cubeID,nodeID）を返す関数</p>
+    
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
@@ -428,7 +434,8 @@
   <div class="panel-heading codesum"><span class="anchor" id="boundprocedure-get_cubeid_contains"></span><h3>procedure, public :: <strong>get_cubeID_contains</strong>    </h3></div>
   <ul class="list-group">
       <li class="list-group-item">
-          <h3>private function get_cubeID_contains(self, cdn)</h3>    
+          <h3>private function get_cubeID_contains(self, cdn)</h3><p>任意座標（引数）を含むcubeをメッシュの中から探してそのIDを返す関数</p>
+    
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>

@@ -138,7 +138,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    
+    <p>CUBE出力ファイル形式：Plot3Dを取り扱うためのモジュール</p>
 <br>    
         <div class="panel panel-default">
       <div class="panel-heading">
@@ -279,6 +279,7 @@
      <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="type-cube_inp3d"></span><h3>type, public :: <a href='../type/cube_inp3d.html'>cube_inP3D</a>  </h3></div>
   <div class="panel-body">
+    <p>cube（Plot3D形式における立方体）構造体</p>
      <h4>Components</h4>
     <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
@@ -310,6 +311,7 @@
      <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="type-plot3dnodeinfo"></span><h3>type, public :: <a href='../type/plot3dnodeinfo.html'>plot3dNodeInfo</a>  </h3></div>
   <div class="panel-body">
+    <p>節点情報構造体</p>
      <h4>Components</h4>
     <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
@@ -334,6 +336,7 @@
      <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="type-plot3dmesh"></span><h3>type, public :: <a href='../type/plot3dmesh.html'>Plot3dMesh</a>  </h3></div>
   <div class="panel-body">
+    <p>Plot3Dメッシュクラス</p>
      <h4>Components</h4>
     <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Visibility</th><th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
@@ -341,7 +344,7 @@
 <tr>
   <td><span class="anchor" id="variable-cubes"></span>type(<a href='../type/cube_inp3d.html'>cube_inP3D</a>),</td>
 <td>public,</td>  <td>allocatable</td><td>::</td>
-  <td><strong>cubes</strong>(:)</td><td></td><td></td><td></td>
+  <td><strong>cubes</strong>(:)</td><td></td><td></td><td><p>cube配列</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-areaofmesh"></span>procedure,</td>
@@ -381,7 +384,9 @@
       <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-read_plot3d_multigrid"></span><h3>public function <a href='../proc/read_plot3d_multigrid.html'>read_plot3d_multigrid</a>(fName) result(mesh)</h3></div>
   <div class="panel-body">
-           
+       
+<p>メッシュファイル（.g）を読み込んでメッシュクラスを返す関数</p>
+    
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
