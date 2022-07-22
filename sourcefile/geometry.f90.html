@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <meta name="description" content="ウイルス飛沫運動シミュレーション">
+   <meta name="description" content="Simulation of Virus-Laden Droplets Behavior in AFDET">
     <meta name="author" content="Y.Ida" >
     <link rel="icon" href="../favicon.png">
 
@@ -90,7 +90,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.6% of total for source files.">32 statements</a>
+    title=" 0.9% of total for source files.">43 statements</a>
      </li> 
     <li><i class="fa fa-code"></i><a href="../src/geometry.f90"> Source File</a></li>
   </ul>
@@ -327,15 +327,15 @@
 <a id="ln-3" name="ln-3"></a>    <span class="k">implicit none</span>
 <a id="ln-4" name="ln-4"></a><span class="k">    private</span>
 <a id="ln-5" name="ln-5"></a>
-<a id="ln-6" name="ln-6"></a><span class="k">    </span><span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.e-7</span>
+<a id="ln-6" name="ln-6"></a><span class="k">    </span><span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.e-6</span>
 <a id="ln-7" name="ln-7"></a>    <span class="kt">real</span><span class="p">,</span> <span class="k">parameter</span> <span class="kd">::</span> <span class="n">frac_1_6</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="mf">6.</span>
 <a id="ln-8" name="ln-8"></a>
-<a id="ln-9" name="ln-9"></a>    <span class="k">public </span><span class="n">volume_tetra</span><span class="p">,</span> <span class="n">insideJudgment_tetra</span>
+<a id="ln-9" name="ln-9"></a>    <span class="k">public </span><span class="n">volume_tetra</span><span class="p">,</span> <span class="n">insideJudgment_tetra</span><span class="p">,</span> <span class="n">insideJudgment_tetra_check</span>
 <a id="ln-10" name="ln-10"></a>    
 <a id="ln-11" name="ln-11"></a><span class="k">contains</span>
 <a id="ln-12" name="ln-12"></a>
-<a id="ln-13" name="ln-13"></a><span class="k">    function </span><span class="n">volume_tetra</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span>
-<a id="ln-14" name="ln-14"></a>        <span class="c">!テトラの体積計算。</span>
+<a id="ln-13" name="ln-13"></a>    <span class="c">!&gt;テトラの体積計算。</span>
+<a id="ln-14" name="ln-14"></a>    <span class="k">function </span><span class="n">volume_tetra</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span>
 <a id="ln-15" name="ln-15"></a>        <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">vertices</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
 <a id="ln-16" name="ln-16"></a>        <span class="kt">real </span><span class="n">volume</span>
 <a id="ln-17" name="ln-17"></a>        <span class="kt">real</span><span class="p">,</span> <span class="k">dimension</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="kd">::</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span>
@@ -348,32 +348,49 @@
 <a id="ln-24" name="ln-24"></a>
 <a id="ln-25" name="ln-25"></a>    <span class="k">end function</span>
 <a id="ln-26" name="ln-26"></a>
-<a id="ln-27" name="ln-27"></a><span class="k">    function </span><span class="n">insideJudgment_tetra</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">isInside</span><span class="p">)</span>
-<a id="ln-28" name="ln-28"></a>        <span class="c">!任意の点がテトラの内部にあるかどうかを判定する。</span>
-<a id="ln-29" name="ln-29"></a>        <span class="c">!点でテトラを分割したそれぞれの体積の和と、元々のテトラの体積が一致すれば、点は内部にある。</span>
-<a id="ln-30" name="ln-30"></a>        <span class="c">!https://matcha-choco010.net/2018/03/14/point-in-tetrahedron/</span>
+<a id="ln-27" name="ln-27"></a>    <span class="c">!&gt;任意の点がテトラの内部にあるかどうかを判定する。</span>
+<a id="ln-28" name="ln-28"></a>    <span class="c">!&gt;点でテトラを分割したそれぞれの体積の和が、元々のテトラの体積を上回れば、点はテトラ外部にある。</span>
+<a id="ln-29" name="ln-29"></a>    <span class="c">!&gt;https://matcha-choco010.net/2018/03/14/point-in-tetrahedron/</span>
+<a id="ln-30" name="ln-30"></a>    <span class="k">function </span><span class="n">insideJudgment_tetra</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">isInside</span><span class="p">)</span>
 <a id="ln-31" name="ln-31"></a>        <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">vertices</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">point</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a id="ln-32" name="ln-32"></a>        <span class="kt">real </span><span class="n">volume</span><span class="p">,</span> <span class="n">vol_sum</span><span class="p">,</span> <span class="n">mini_vertices</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
-<a id="ln-33" name="ln-33"></a>        <span class="kt">integer </span><span class="n">i</span>
-<a id="ln-34" name="ln-34"></a>        <span class="kt">logical </span><span class="n">isInside</span>
-<a id="ln-35" name="ln-35"></a>
-<a id="ln-36" name="ln-36"></a>        <span class="n">volume</span> <span class="o">=</span> <span class="n">volume_tetra</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
-<a id="ln-37" name="ln-37"></a>        <span class="n">vol_sum</span> <span class="o">=</span> <span class="mf">0.</span>
-<a id="ln-38" name="ln-38"></a>
-<a id="ln-39" name="ln-39"></a>        <span class="k">do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span>
-<a id="ln-40" name="ln-40"></a>            <span class="n">mini_vertices</span> <span class="o">=</span> <span class="n">vertices</span>
-<a id="ln-41" name="ln-41"></a>            <span class="n">mini_vertices</span><span class="p">(:,</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">point</span>
-<a id="ln-42" name="ln-42"></a>
-<a id="ln-43" name="ln-43"></a>            <span class="n">vol_sum</span> <span class="o">=</span> <span class="n">vol_sum</span> <span class="o">+</span> <span class="n">volume_tetra</span><span class="p">(</span><span class="n">mini_vertices</span><span class="p">)</span>
-<a id="ln-44" name="ln-44"></a>        <span class="k">end do</span>
-<a id="ln-45" name="ln-45"></a>
-<a id="ln-46" name="ln-46"></a>        <span class="c">!点がテトラの内部にあるとき、分割体積和と元々の体積は厳密に一致するはずだが、</span>
-<a id="ln-47" name="ln-47"></a>        <span class="c">!数値誤差のために少し条件を緩和する</span>
-<a id="ln-48" name="ln-48"></a>        <span class="n">isInside</span> <span class="o">=</span> <span class="p">(</span><span class="n">vol_sum</span> <span class="o">&lt;=</span> <span class="n">volume</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">delta</span><span class="p">))</span>
+<a id="ln-32" name="ln-32"></a>        <span class="kt">real </span><span class="n">volume</span><span class="p">,</span> <span class="n">vol_sum</span>
+<a id="ln-33" name="ln-33"></a>        <span class="kt">logical </span><span class="n">isInside</span>
+<a id="ln-34" name="ln-34"></a>
+<a id="ln-35" name="ln-35"></a>        <span class="n">volume</span> <span class="o">=</span> <span class="n">volume_tetra</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
+<a id="ln-36" name="ln-36"></a>        <span class="n">vol_sum</span> <span class="o">=</span> <span class="n">partitionedVolume_sum_tetra</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+<a id="ln-37" name="ln-37"></a>
+<a id="ln-38" name="ln-38"></a>        <span class="c">!点がテトラの内部にあるとき、分割体積和と元々の体積は厳密に一致するはずだが、</span>
+<a id="ln-39" name="ln-39"></a>        <span class="c">!数値誤差のために少し条件を緩和する</span>
+<a id="ln-40" name="ln-40"></a>        <span class="n">isInside</span> <span class="o">=</span> <span class="p">(</span><span class="n">vol_sum</span> <span class="o">&lt;=</span> <span class="n">volume</span><span class="o">*</span><span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">delta</span><span class="p">))</span>
+<a id="ln-41" name="ln-41"></a>
+<a id="ln-42" name="ln-42"></a>    <span class="k">end function</span>
+<a id="ln-43" name="ln-43"></a>
+<a id="ln-44" name="ln-44"></a>    <span class="c">!&gt;点でテトラを分割したそれぞれの体積の和を求める</span>
+<a id="ln-45" name="ln-45"></a>    <span class="k">function </span><span class="n">partitionedVolume_sum_tetra</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">vol_sum</span><span class="p">)</span>
+<a id="ln-46" name="ln-46"></a>        <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">vertices</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">point</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="ln-47" name="ln-47"></a>        <span class="kt">real </span><span class="n">vol_sum</span><span class="p">,</span> <span class="n">mini_vertices</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<a id="ln-48" name="ln-48"></a>        <span class="kt">integer </span><span class="n">i</span>
 <a id="ln-49" name="ln-49"></a>
-<a id="ln-50" name="ln-50"></a>    <span class="k">end function</span>
-<a id="ln-51" name="ln-51"></a><span class="k">    </span>
-<a id="ln-52" name="ln-52"></a><span class="k">end module </span><span class="n">geometry_m</span>
+<a id="ln-50" name="ln-50"></a>        <span class="n">vol_sum</span> <span class="o">=</span> <span class="mf">0.</span>
+<a id="ln-51" name="ln-51"></a>
+<a id="ln-52" name="ln-52"></a>        <span class="k">do </span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span>
+<a id="ln-53" name="ln-53"></a>            <span class="n">mini_vertices</span> <span class="o">=</span> <span class="n">vertices</span>
+<a id="ln-54" name="ln-54"></a>            <span class="n">mini_vertices</span><span class="p">(:,</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">point</span>
+<a id="ln-55" name="ln-55"></a>            <span class="n">vol_sum</span> <span class="o">=</span> <span class="n">vol_sum</span> <span class="o">+</span> <span class="n">volume_tetra</span><span class="p">(</span><span class="n">mini_vertices</span><span class="p">)</span>
+<a id="ln-56" name="ln-56"></a>        <span class="k">end do</span>
+<a id="ln-57" name="ln-57"></a>
+<a id="ln-58" name="ln-58"></a><span class="k">    end function</span>
+<a id="ln-59" name="ln-59"></a>
+<a id="ln-60" name="ln-60"></a><span class="k">    subroutine </span><span class="n">insideJudgment_tetra_check</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">vol_sum</span><span class="p">,</span> <span class="n">volume</span><span class="p">)</span>
+<a id="ln-61" name="ln-61"></a>        <span class="kt">real</span><span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">vertices</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">point</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="ln-62" name="ln-62"></a>        <span class="kt">real </span><span class="n">volume</span><span class="p">,</span> <span class="n">vol_sum</span>
+<a id="ln-63" name="ln-63"></a>
+<a id="ln-64" name="ln-64"></a>        <span class="n">volume</span> <span class="o">=</span> <span class="n">volume_tetra</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
+<a id="ln-65" name="ln-65"></a>        <span class="n">vol_sum</span> <span class="o">=</span> <span class="n">partitionedVolume_sum_tetra</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+<a id="ln-66" name="ln-66"></a>
+<a id="ln-67" name="ln-67"></a>    <span class="k">end subroutine</span>
+<a id="ln-68" name="ln-68"></a>
+<a id="ln-69" name="ln-69"></a><span class="k">end module </span><span class="n">geometry_m</span>
 </pre></div>
 
     </section>
