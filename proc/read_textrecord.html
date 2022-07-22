@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <meta name="description" content="ウイルス飛沫運動シミュレーション">
+   <meta name="description" content="Simulation of Virus-Laden Droplets Behavior in AFDET">
     <meta name="author" content="Y.Ida" >
     <link rel="icon" href="../favicon.png">
 
@@ -125,6 +125,8 @@
     <h2>public subroutine read_textRecord(filename, array)</h2>
     
 
+    <p>TXTファイルを、全行読み込む。
+1行あたりの文字数は引数に依存。</p>
 
     <h3>Arguments</h3>
       <table class="table table-striped varlist">
@@ -134,13 +136,14 @@
   <td><span class="anchor" id="variable-filename~2"></span>character,</td>
 <td>intent(in)</td>
   <td></td>  <td></td><td>::</td>
-  <td><strong>filename</strong></td><td></td>
+  <td><strong>filename</strong></td><td><p>ファイル名（パス）</p></td>
 </tr>
 <tr>
   <td><span class="anchor" id="variable-array~5"></span>character,</td>
 <td>intent(out),</td>
   <td></td>  <td>allocatable</td><td>::</td>
-  <td><strong>array</strong>(:)</td><td></td>
+  <td><strong>array</strong>(:)</td><td><p>文字列配列
+要素数はallocatableだが、1要素あたりの文字数は予め指定</p></td>
 </tr>
 </tbody>
 </table>

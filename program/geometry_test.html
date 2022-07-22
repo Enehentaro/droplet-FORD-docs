@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <meta name="description" content="ウイルス飛沫運動シミュレーション">
+   <meta name="description" content="Simulation of Virus-Laden Droplets Behavior in AFDET">
     <meta name="author" content="Y.Ida" >
     <link rel="icon" href="../favicon.png">
 
@@ -89,7 +89,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 5.4% of total for programs.">25 statements</a>
+    title=" 5.2% of total for programs.">25 statements</a>
      </li> 
     <li><i class="fa fa-code"></i><a href="../src/geometry_test.f90"> Source File</a></li>
   </ul>
@@ -120,7 +120,7 @@
       <a class="list-group-item" href="../program/geometry_test.html#variable-tetra">tetra</a>
       <a class="list-group-item" href="../program/geometry_test.html#variable-imax">imax</a>
       <a class="list-group-item" href="../program/geometry_test.html#variable-rand">rand</a>
-      <a class="list-group-item" href="../program/geometry_test.html#variable-point~2">point</a>
+      <a class="list-group-item" href="../program/geometry_test.html#variable-point~3">point</a>
       <a class="list-group-item" href="../program/geometry_test.html#variable-plane_judge">plane_judge</a>
       <a class="list-group-item" href="../program/geometry_test.html#variable-tetra_judge">tetra_judge</a>
       <a class="list-group-item" href="../program/geometry_test.html#variable-i~2">i</a>
@@ -263,7 +263,9 @@
       </ul>
     </div>
 
-    
+    <p>テトラ内外判定をテストする。
+乱数で発生させた点群に対して判定を行う。
+テスト用のテトラは単純な形状で、平面の方程式から即座に内外判定が行えるので、これと比較してテストする。</p>
     <br>
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -451,7 +453,7 @@
       <a class="list-group-item" href="../program/geometry_test.html#variable-tetra">tetra</a>
       <a class="list-group-item" href="../program/geometry_test.html#variable-imax">imax</a>
       <a class="list-group-item" href="../program/geometry_test.html#variable-rand">rand</a>
-      <a class="list-group-item" href="../program/geometry_test.html#variable-point~2">point</a>
+      <a class="list-group-item" href="../program/geometry_test.html#variable-point~3">point</a>
       <a class="list-group-item" href="../program/geometry_test.html#variable-plane_judge">plane_judge</a>
       <a class="list-group-item" href="../program/geometry_test.html#variable-tetra_judge">tetra_judge</a>
       <a class="list-group-item" href="../program/geometry_test.html#variable-i~2">i</a>
@@ -492,7 +494,7 @@
   <td><strong>rand</strong>(3,imax)</td><td></td><td></td><td></td>
 </tr>
 <tr>
-  <td><span class="anchor" id="variable-point~2"></span>real</td>
+  <td><span class="anchor" id="variable-point~3"></span>real</td>
   <td></td><td>::</td>
   <td><strong>point</strong>(3)</td><td></td><td></td><td></td>
 </tr>
@@ -527,7 +529,9 @@
       <div class="panel panel-default">
   <div class="panel-heading codesum"><span class="anchor" id="proc-plane_equation"></span><h3>function <a href='../proc/plane_equation.html'>plane_equation</a>(x, y) result(z)</h3></div>
   <div class="panel-body">
-           
+       
+<p>テスト用テトラの斜面の方程式</p>
+    
 <h4>Arguments</h4>      <table class="table table-striped varlist">
 <thead><tr><th>Type</th><th>Intent</th><th>Optional</th><th>Attributes</th><th></th><th>Name</th><th></th></thead>
 <tbody>
