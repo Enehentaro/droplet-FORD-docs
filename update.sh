@@ -2,7 +2,7 @@
 
 ford ../droplets_simulation/api-doc-ford-settings.md
 
-rm -r docs
+rm -v -r docs
 
 docs_source_dir="../droplets_simulation/docs"
 
