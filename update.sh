@@ -2,9 +2,11 @@
 
 ford ../droplets_simulation/api-doc-ford-settings.md
 
-files="../droplets_simulation/docs/*"
+rm -r docs
 
-cp -p -v -r $files ./
+docs_source_dir="../droplets_simulation/docs"
+
+cp -p -v -r $docs_source_dir ./
 
 git add .
 git commit -m "update"
